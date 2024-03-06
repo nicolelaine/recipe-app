@@ -71,7 +71,7 @@ def add_recipe():
 
     return jsonify({'message': 'Recipe added successfully', 'recipe': new_recipe_data})
 
-@app.route('/api/recipes/<int:recipe_id>')
+@app.route('/api/recipes/<int:recipe_id>', methods=['PUT'])
 def update_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
@@ -102,6 +102,14 @@ def update_recipe(recipe_id):
     }
     return jsonify({'message': 'Recipe updated successfully', 'recipe': updated_recipe})
 
+@app.route('/api/recipes/<int:recipe_id>', methods=['DELETE'])
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if not recipe:
+        return jsonify({'error': 'Recipe not found'}), 404
+    db.session.delete(recipe)
+    db.session.commit()
+    return jsonify({'message': 'Recipe deleted successfully'})
 
 
 if __name__ == '__main__':
