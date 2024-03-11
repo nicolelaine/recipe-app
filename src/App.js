@@ -4,9 +4,11 @@ import "./App.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import RecipeExcerpt from "./components/RecipeExcerpt";
+import RecipeFull from "./components/RecipeFull";
 
 function App() {
    const [recipes, setRecipes] = useState([])
+   const [selectedRecipe, setSelectedRecipe] = useState(null)
 
    const fetchAllRecipes = async () => {
       try {
@@ -29,15 +31,35 @@ function App() {
         fetchAllRecipes();
       },[]);
 
+
+  const handleSelectRecipe = (recipe) => {
+      setSelectedRecipe(recipe);
+  };
+
+  const handleUnselectRecipe = () => {
+      setSelectedRecipe(null);
+  };
+
   return (
     <div className='recipe-app'>
-        <div className="recipe-list">
-              {recipes.map(recipe => (
-              <RecipeExcerpt key={recipe.id} recipe={recipe} />
-               ))}
+       <Header />
+      {selectedRecipe && (
+      <RecipeFull 
+        selectedRecipe={selectedRecipe} 
+        handleUnselectRecipe={handleUnselectRecipe} 
+      />
+      )}
+    {selectedRecipe === null && (
+    <div className="recipe-list">
+      {recipes.map(recipe => (
+        <RecipeExcerpt 
+            key={recipe.id} 
+            recipe={recipe} 
+            handleSelectRecipe={handleSelectRecipe} 
+        />
+    ))}
         </div> 
-      <Header />
-      <p>Your recipes here! </p>
+    )}
     </div>
   );
 }

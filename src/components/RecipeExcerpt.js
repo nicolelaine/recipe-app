@@ -1,8 +1,6 @@
 import React from "react";
-import { Search } from "react-feather";
-import { ReactComponent as Logo } from "../images/utensils.svg";
 
-const RecipeExcerpt = ({recipe}) => {
+const RecipeExcerpt = ({recipe, handleSelectRecipe}) => {
   return (
     <article className="recipe-card">
         <figure>
@@ -10,7 +8,7 @@ const RecipeExcerpt = ({recipe}) => {
         </figure>
         <h2>{recipe.title}</h2>
         <p className="flex-spacing">{recipe.description}</p>
-        <button>View</button>
+        <button onClick={() => handleSelectRecipe(recipe)}>View</button>
     </article>
   );
 };
