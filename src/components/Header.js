@@ -1,8 +1,9 @@
 import React from "react";
 import { Search } from "react-feather";
 import { ReactComponent as Logo } from "../images/utensils.svg";
+import NewRecipeForm from "./NewRecipeForm";
 
-const Header = () => {
+const Header = ({showRecipeForm}) => {
   return (
     <header>
       <div className='logo-search'>
@@ -16,6 +17,7 @@ const Header = () => {
         </div>
       </div>
       <h1>My Favorite Recipes</h1>
+      <button className="new-recipe" onClick={showRecipeForm}>Add New Recipe</button>
     </header>
   );
 };
