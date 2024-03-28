@@ -67,11 +67,50 @@ function App() {
      setNewRecipe({...newRecipe, [name]: value});
   };   
 
+
+  const handleNewRecipe = async (e, NewRecipeForm) => {
+    e.preventDefault()
+    try {
+   //   setLoading(true)
+      const response = await fetch('api/recipes', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(NewRecipeForm)
+      });
+        if (response.status === 200) {
+           const data =  await response.json()
+           setRecipes([...recipes, data.recipe]);    
+        }
+ 
+    } catch (e) {
+      console.log("There was an error, sorry", e)
+    }
+    setShowNewRecipeForm(false)
+    setNewRecipe({
+      title: "",
+      ingredients: "",
+      instructions: "",
+      servings: 1,
+      description: "",
+      image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    });
+  };
+
+ // useEffect (()=> {
+ //   fetchQuotes();
+ // }, []);
+
+ // useEffect (() => {
+ //   window.localStorage.setItem("favoriteQuotes", JSON.stringify(favoriteQuotes))
+//  },[favoriteQuotes]);
+
   return (
     <div className='recipe-app'>
        <Header showRecipeForm={showRecipeForm} />
        {showNewRecipeForm && 
-        <NewRecipeForm hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm} newRecipe={newRecipe} />
+        <NewRecipeForm hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm} newRecipe={newRecipe} handleNewRecipe={handleNewRecipe} />
        }
       {selectedRecipe && (
       <RecipeFull 
@@ -79,7 +118,7 @@ function App() {
         handleUnselectRecipe={handleUnselectRecipe} 
       />
       )}
-    {selectedRecipe === null && (
+    {selectedRecipe === null && !showNewRecipeForm && (
     <div className="recipe-list">
       {recipes.map(recipe => (
         <RecipeExcerpt 
