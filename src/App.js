@@ -68,7 +68,7 @@ function App() {
   };   
 
 
-  const handleNewRecipe = async (e, NewRecipeForm) => {
+  const handleNewRecipe = async (e, newFormRecipe) => {
     e.preventDefault()
     try {
    //   setLoading(true)
@@ -77,7 +77,7 @@ function App() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(NewRecipeForm)
+        body: JSON.stringify(newFormRecipe)
       });
         if (response.status === 200) {
            const data =  await response.json()
