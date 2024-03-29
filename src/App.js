@@ -62,11 +62,16 @@ function App() {
     setSelectedRecipe(null);
   };
 
-  const onUpdateForm = (e) => {
+  const onUpdateForm = (e, action = "new") => {
      const { name, value } = e.target;
-     setNewRecipe({...newRecipe, [name]: value});
-  };   
-
+    
+      if (action === "update") {
+        setSelectedRecipe({...setSelectedRecipe, [name]: value});
+      } else if (action === "new") {
+        setNewRecipe({...newRecipe, [name]: value})
+      }
+  };  
+  
 
   const handleNewRecipe = async (e, newFormRecipe) => {
     e.preventDefault()
@@ -85,7 +90,7 @@ function App() {
         }
  
     } catch (e) {
-      console.log("There was an error, sorry", e)
+      console.log("The form did not work, sorry. No new recipe for you!", e)
     }
     setShowNewRecipeForm(false)
     setNewRecipe({
@@ -98,13 +103,40 @@ function App() {
     });
   };
 
- // useEffect (()=> {
- //   fetchQuotes();
- // }, []);
-
- // useEffect (() => {
- //   window.localStorage.setItem("favoriteQuotes", JSON.stringify(favoriteQuotes))
-//  },[favoriteQuotes]);
+  const handleUpdateRecipe = async (e, selectedRecipe) => {
+    e.preventDefault()
+    const {id} = selectedRecipe;
+    try {
+   //   setLoading(true)
+      const response = await fetch(`api/recipes/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(selectedRecipe)
+      });
+        if (response.status === 200) {
+           const data =  await response.json()
+           setRecipes(recipes.map(recipe =>
+            recipe.id === selectedRecipe.id ?
+            data.recipe : recipe
+           ));    
+           console.log("Recipe successfully updated")
+        };
+ 
+    } catch (e) {
+      console.log("The recipe did not update, sorry.", e)
+    }
+    setSelectedRecipe(null)
+    setNewRecipe({
+      title: "",
+      ingredients: "",
+      instructions: "",
+      servings: 1,
+      description: "",
+      image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    });
+  };
 
   return (
     <div className='recipe-app'>
@@ -116,6 +148,8 @@ function App() {
       <RecipeFull 
         selectedRecipe={selectedRecipe} 
         handleUnselectRecipe={handleUnselectRecipe} 
+        onUpdateForm={onUpdateForm}
+        handleUpdateRecipe={handleUpdateRecipe}
       />
       )}
     {selectedRecipe === null && !showNewRecipeForm && (
