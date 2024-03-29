@@ -105,9 +105,8 @@ function App() {
 
   const handleUpdateRecipe = async (e, selectedRecipe) => {
     e.preventDefault()
-    const {id} = selectedRecipe;
+    const { id } = selectedRecipe;
     try {
-   //   setLoading(true)
       const response = await fetch(`api/recipes/${id}`, {
         method: "PUT",
         headers: {
@@ -117,10 +116,11 @@ function App() {
       });
         if (response.status === 200) {
            const data =  await response.json()
-           setRecipes(recipes.map(recipe =>
-            recipe.id === selectedRecipe.id ?
+           setRecipes(recipes.map((recipe) => {
+           return recipe.id === selectedRecipe.id ?
             data.recipe : recipe
-           ));    
+            })
+         ); 
            console.log("Recipe successfully updated")
         };
  
