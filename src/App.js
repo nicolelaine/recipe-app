@@ -7,9 +7,9 @@ import NewRecipeForm from "./components/NewRecipeForm";
 import "./App.css";
 
 function App() {
-   const [recipes, setRecipes] = useState([])
-   const [selectedRecipe, setSelectedRecipe] = useState(null)
-   const [showNewRecipeForm, setShowNewRecipeForm] = useState (false)
+   const [recipes, setRecipes] = useState([]);
+   const [selectedRecipe, setSelectedRecipe] = useState(null);
+   const [showNewRecipeForm, setShowNewRecipeForm] = useState (false);
    
    const [newRecipe, setNewRecipe] = useState(
     {
@@ -25,11 +25,11 @@ function App() {
    useEffect (() => {
     const fetchAllRecipes = async () => {
       try {
-        const response = await fetch ('/api/recipes');
+        const response = await fetch('/api/recipes');
       
         if (response.ok) {
-          const result = await response.json();
-          setRecipes(result);
+          const data = await response.json();
+          setRecipes(data);
     } 
        else {
           console.log("Not able to retrieve recipe at this time. Please try again later.")
@@ -141,9 +141,14 @@ function App() {
   return (
     <div className='recipe-app'>
        <Header showRecipeForm={showRecipeForm} />
-       {showNewRecipeForm && 
-        <NewRecipeForm hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm} newRecipe={newRecipe} handleNewRecipe={handleNewRecipe} />
-       }
+       {showNewRecipeForm && (
+        <NewRecipeForm 
+        hideRecipeForm={hideRecipeForm} 
+        onUpdateForm={onUpdateForm} 
+        newRecipe={newRecipe} 
+        handleNewRecipe={handleNewRecipe} 
+        />
+       )}
       {selectedRecipe && (
       <RecipeFull 
         selectedRecipe={selectedRecipe} 
