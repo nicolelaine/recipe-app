@@ -59,16 +59,6 @@ function App() {
     setSelectedRecipe(null);
   };
 
-  const onUpdateForm = (e, action = "new") => {
-     const { name, value } = e.target;
-    
-      if (action === "update") {
-        setSelectedRecipe({...setSelectedRecipe, [name]: value});
-      } else if (action === "new") {
-        setNewRecipe({...newRecipe, [name]: value})
-      }
-  };  
-  
 
   const handleNewRecipe = async (e, newRecipe) => {
     e.preventDefault()
@@ -107,6 +97,9 @@ function App() {
     e.preventDefault()
 
     const { id } = selectedRecipe;
+
+    console.log("Selected Recipe:", selectedRecipe);
+    console.log("Recipe ID:", id);
     try {
       const response = await fetch(`/api/recipes/${id}`, {
         method: "PUT",
@@ -136,6 +129,17 @@ function App() {
 
     setSelectedRecipe(null);
   };
+
+  const onUpdateForm = (e, action = "new") => {
+    const { name, value } = e.target;
+   
+     if (action === "update") {
+       setSelectedRecipe({...setSelectedRecipe, [name]: value});
+     } else if (action === "new") {
+       setNewRecipe({...newRecipe, [name]: value})
+     }
+ };  
+ 
 
 
   return (
