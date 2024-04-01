@@ -21,6 +21,7 @@ function App() {
       image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" //default
     });
    
+    console.log(selectedRecipe);
    
    useEffect (() => {
     const fetchAllRecipes = async () => {
@@ -41,9 +42,9 @@ function App() {
       },[]);
 
   const handleNewRecipe = async (e, newRecipe) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const response = await fetch('/api/recipes', {
+      const response = await fetch("/api/recipes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -51,9 +52,9 @@ function App() {
         body: JSON.stringify(newRecipe)
       });
         if (response.ok) {
-           const data =  await response.json()
+           const data =  await response.json();
            setRecipes([...recipes, data.recipe]);    
-           console.log("Recipe added successfully!")
+           console.log("Recipe added successfully!");
            
            setShowNewRecipeForm(false)
            setNewRecipe({
@@ -74,7 +75,7 @@ function App() {
        };
 
   const handleUpdateRecipe = async (e, selectedRecipe) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const { id } = selectedRecipe;
 

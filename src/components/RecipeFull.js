@@ -18,7 +18,6 @@ const RecipeFull = ({selectedRecipe, handleUnselectRecipe, onUpdateForm, handleU
         <EditRecipeForm
         selectedRecipe={selectedRecipe} 
         handleCancel={handleCancel}
-        onClick={onUpdateForm}
         onUpdateForm={onUpdateForm}
         handleUpdateRecipe={handleUpdateRecipe}
         />
