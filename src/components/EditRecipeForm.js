@@ -5,7 +5,9 @@ const EditRecipeForm = ({ selectedRecipe, handleCancel, onUpdateForm, handleUpda
   return (
     <div className='recipe-form'>
       <h2>Edit "{selectedRecipe.title}"</h2>
+
       <button className='cancel-button' onClick={handleCancel}>Cancel</button>
+     
       <form onSubmit={(e) => handleUpdateRecipe(e, selectedRecipe)}>
         <label>Title</label>
         <input type='text' name='title' value={selectedRecipe.title} onChange={(e) => onUpdateForm(e, "update")} required />

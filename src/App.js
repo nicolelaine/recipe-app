@@ -94,17 +94,18 @@ function App() {
              description: "",
              image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
            });
-          } else{
+          } else {
             console.error("Oops - could not add recipe!");
       
           }
           } catch (e) {
-            console.error("The form did not work, sorry. No new recipe for you!")
+            console.error("The form did not work, sorry. No new recipe for you!", e)
           }
        };
 
   const handleUpdateRecipe = async (e, selectedRecipe) => {
     e.preventDefault()
+
     const { id } = selectedRecipe;
     try {
       const response = await fetch(`/api/recipes/${id}`, {
@@ -130,10 +131,10 @@ function App() {
           console.error("Failed to update recipe")
         }
     } catch (error) {
-      console.error("The recipe did not update, sorry.")
+      console.error("The recipe did not update, sorry.", e)
     }
 
-    setSelectedRecipe(null)
+    setSelectedRecipe(null);
   };
 
 

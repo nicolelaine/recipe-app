@@ -8,13 +8,13 @@ const RecipeFull = ({selectedRecipe, handleUnselectRecipe, onUpdateForm, handleU
   const [editing, setEditing] = useState(false);
 
   const handleCancel = () => {
-    setEditing(false)
+    setEditing(false);
   };
 
 
   return (
     <div className='recipe-details'>
-      {editing? (
+      {editing ? (
         <EditRecipeForm
         selectedRecipe={selectedRecipe} 
         handleCancel={handleCancel}
