@@ -9,7 +9,7 @@ import "./App.css";
 function App() {
    const [recipes, setRecipes] = useState([]);
    const [selectedRecipe, setSelectedRecipe] = useState(null);
-   const [showNewRecipeForm, setShowNewRecipeForm] = useState (false);
+   const [showNewRecipeForm, setShowNewRecipeForm] = useState(false);
    
    const [newRecipe, setNewRecipe] = useState(
     {
@@ -25,13 +25,12 @@ function App() {
    useEffect (() => {
     const fetchAllRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes');
+        const response = await fetch("/api/recipes");
       
         if (response.ok) {
           const data = await response.json();
           setRecipes(data);
-    } 
-       else {
+    }  else {
           console.log("Not able to retrieve recipe at this time. Please try again later.")
         }
       } catch (error) {
@@ -40,25 +39,6 @@ function App() {
       };
         fetchAllRecipes();
       },[]);
-
-
-  const handleSelectRecipe = (recipe) => {
-      setSelectedRecipe(recipe);
-  };
-
-  const handleUnselectRecipe = () => {
-      setSelectedRecipe(null);
-  };
-
-  const hideRecipeForm = () => {
-      setShowNewRecipeForm(false);
-  };
-
-  const showRecipeForm = () => {
-    setShowNewRecipeForm(true);
-    setSelectedRecipe(null);
-  };
-
 
   const handleNewRecipe = async (e, newRecipe) => {
     e.preventDefault()
@@ -70,7 +50,7 @@ function App() {
         },
         body: JSON.stringify(newRecipe)
       });
-        if (response.status === 200) {
+        if (response.ok) {
            const data =  await response.json()
            setRecipes([...recipes, data.recipe]);    
            console.log("Recipe added successfully!")
@@ -100,6 +80,7 @@ function App() {
 
     console.log("Selected Recipe:", selectedRecipe);
     console.log("Recipe ID:", id);
+   
     try {
       const response = await fetch(`/api/recipes/${id}`, {
         method: "PUT",
@@ -129,6 +110,24 @@ function App() {
 
     setSelectedRecipe(null);
   };
+
+  const handleSelectRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+};
+
+const handleUnselectRecipe = () => {
+    setSelectedRecipe(null);
+};
+
+const hideRecipeForm = () => {
+    setShowNewRecipeForm(false);
+};
+
+const showRecipeForm = () => {
+  setShowNewRecipeForm(true);
+  setSelectedRecipe(null);
+};
+
 
   const onUpdateForm = (e, action = "new") => {
     const { name, value } = e.target;
