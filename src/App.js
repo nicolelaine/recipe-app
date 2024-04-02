@@ -134,7 +134,7 @@ const showRecipeForm = () => {
     const { name, value } = e.target;
    
      if (action === "update") {
-       setSelectedRecipe({...setSelectedRecipe, [name]: value});
+       setSelectedRecipe({...selectedRecipe, [name]: value});
      } else if (action === "new") {
        setNewRecipe({...newRecipe, [name]: value})
      }

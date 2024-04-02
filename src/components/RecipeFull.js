@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import { X } from "react-feather";
+import React, { useState } from "react";
 import EditRecipeForm from "./EditRecipeForm";
+import { X } from "react-feather";
 
 
 const RecipeFull = ({ selectedRecipe, handleUnselectRecipe, onUpdateForm, handleUpdateRecipe }) => {
