@@ -130,6 +130,37 @@ const showRecipeForm = () => {
 };
 
 
+const handleDeleteRecipe = async (recipeId) => {
+// e.preventDefault();
+
+//const { id } = selectedRecipe;
+
+ // console.log("Selected Recipe:", selectedRecipe);
+ // console.log("Recipe ID:", id);
+ 
+  try {
+    const response = await fetch(`/api/recipes/${recipeId}`, {
+      method: "DELETE",
+    });
+
+      if (response.status === 200) {
+         setRecipes(
+         recipes.filter((recipe) => {
+          return recipe.id !== recipeId;
+      })
+      );
+      setSelectedRecipe(null) 
+      console.log("Recipe successfully deleted");
+      } else {
+        console.error("Failed to delete recipe")
+      }
+  } catch (error) {
+    console.error("Something went wrong during the request, sorry.", error)
+  }
+};
+
+
+
   const onUpdateForm = (e, action = "new") => {
     const { name, value } = e.target;
    
@@ -159,6 +190,7 @@ const showRecipeForm = () => {
         handleUnselectRecipe={handleUnselectRecipe} 
         onUpdateForm={onUpdateForm}
         handleUpdateRecipe={handleUpdateRecipe}
+        handleDeleteRecipe={handleDeleteRecipe}
       />
       )}
     {selectedRecipe === null && !showNewRecipeForm && (
