@@ -10,6 +10,19 @@ function App() {
    const [recipes, setRecipes] = useState([]);
    const [selectedRecipe, setSelectedRecipe] = useState(null);
    const [showNewRecipeForm, setShowNewRecipeForm] = useState(false);
+   const [searchTerm, setSearchTerm] = useState("");
+
+   const updateSearchTerm = (e) => {
+      setSearchTerm(e.target.value);
+   };
+
+   const handleSearch = () => {
+    const searchResults = recipes.filter((recipe) => {
+         const valuesToSearch = [recipe.title, recipe.ingredients, recipe.description];
+         return valuesToSearch.some(value => value.toLowerCase().includes(searchTerm.toLowerCase())) 
+    })
+       return searchResults;
+   };
    
    const [newRecipe, setNewRecipe] = useState(
     {
@@ -18,7 +31,8 @@ function App() {
       instructions: "",
       servings: 1, // conservative default
       description: "",
-      image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" //default
+      image_url: ""
+    //  image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" //default
     });
    
     console.log(selectedRecipe);
@@ -112,7 +126,7 @@ function App() {
     setSelectedRecipe(null);
   };
 
-  const handleSelectRecipe = (recipe) => {
+const handleSelectRecipe = (recipe) => {
     setSelectedRecipe(recipe);
 };
 
@@ -131,13 +145,6 @@ const showRecipeForm = () => {
 
 
 const handleDeleteRecipe = async (recipeId) => {
-// e.preventDefault();
-
-//const { id } = selectedRecipe;
-
- // console.log("Selected Recipe:", selectedRecipe);
- // console.log("Recipe ID:", id);
- 
   try {
     const response = await fetch(`/api/recipes/${recipeId}`, {
       method: "DELETE",
@@ -172,10 +179,17 @@ const handleDeleteRecipe = async (recipeId) => {
  };  
  
 
+   const displayedRecipes = searchTerm ? 
+   handleSearch(searchTerm) : recipes;
+
 
   return (
     <div className='recipe-app'>
-       <Header showRecipeForm={showRecipeForm} />
+       <Header 
+       showRecipeForm={showRecipeForm}
+       searchTerm={searchTerm}
+       updateSearchTerm={updateSearchTerm}
+        />
        {showNewRecipeForm && (
         <NewRecipeForm 
         hideRecipeForm={hideRecipeForm} 
@@ -195,7 +209,7 @@ const handleDeleteRecipe = async (recipeId) => {
       )}
     {selectedRecipe === null && !showNewRecipeForm && (
     <div className="recipe-list">
-      {recipes.map(recipe => (
+      {displayedRecipes.map(recipe => (
         <RecipeExcerpt 
             key={recipe.id} 
             recipe={recipe} 

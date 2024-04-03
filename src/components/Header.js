@@ -3,7 +3,7 @@ import { Search } from "react-feather";
 import { ReactComponent as Logo } from "../images/utensils.svg";
 import NewRecipeForm from "./NewRecipeForm";
 
-const Header = ({showRecipeForm}) => {
+const Header = ({showRecipeForm, searchTerm, updateSearchTerm}) => {
   return (
     <header>
       <div className='logo-search'>
@@ -12,7 +12,7 @@ const Header = ({showRecipeForm}) => {
           <label className='visually-hidden' htmlFor='search'>
             Search
           </label>
-          <input type='text' placeholder='Search' id='search' />
+          <input type='text' value={searchTerm} placeholder='Search' id='search' onChange={(e) => updateSearchTerm(e)} />
           <Search />
         </div>
       </div>
