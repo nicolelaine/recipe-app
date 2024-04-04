@@ -3,9 +3,9 @@ import { truncateText } from "../helpers/utils";
 
 
 const RecipeExcerpt = ({recipe, handleSelectRecipe}) => {
-  console.log("Recipe description:", recipe.description);
+  //console.log("Recipe description:", recipe.description);
    const truncatedDescription = truncateText(recipe.description, 20);
-  console.log("Truncated description:", truncatedDescription);
+ // console.log("Truncated description:", truncatedDescription);
    return (
     <article className="recipe-card">
         <figure>
