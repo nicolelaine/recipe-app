@@ -3,11 +3,11 @@ import { Search } from "react-feather";
 import { ReactComponent as Logo } from "../images/utensils.svg";
 import NewRecipeForm from "./NewRecipeForm";
 
-const Header = ({showRecipeForm, searchTerm, updateSearchTerm}) => {
+const Header = ({showRecipeForm, searchTerm, updateSearchTerm, displayAllRecipes}) => {
   return (
     <header>
       <div className='logo-search'>
-        <Logo />
+        <Logo onClick={displayAllRecipes} />
         <div className='search'>
           <label className='visually-hidden' htmlFor='search'>
             Search

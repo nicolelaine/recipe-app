@@ -12,6 +12,15 @@ function App() {
    const [showNewRecipeForm, setShowNewRecipeForm] = useState(false);
    const [searchTerm, setSearchTerm] = useState("");
 
+   
+   const displayAlRecipes = () => {
+     setSearchTerm("")
+     setSelectedRecipe(null)
+     setShowNewRecipeForm(false)
+   };
+   
+   
+   
    const updateSearchTerm = (e) => {
       setSearchTerm(e.target.value);
    };
@@ -189,6 +198,7 @@ const handleDeleteRecipe = async (recipeId) => {
        showRecipeForm={showRecipeForm}
        searchTerm={searchTerm}
        updateSearchTerm={updateSearchTerm}
+       displayAllRecipes={displayAlRecipes}
         />
        {showNewRecipeForm && (
         <NewRecipeForm 
